@@ -31,4 +31,8 @@ public class TaskServiceImpl implements TaskService {
         task.setCompleted(true);
         taskRepository.save(task);
     }
+    @Override
+    public List<Task> getIncompleteTasks() {
+        return taskRepository.findByCompletedFalse();
+    }
 }

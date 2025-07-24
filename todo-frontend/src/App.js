@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AddTaskForm from './AddTaskForm';
+import TaskList from './TaskList';
 import './App.css';
 
 const BASE_URL = "http://localhost:8080/api/tasks";
@@ -56,50 +58,15 @@ function App() {
 
   return (
     <div className="container">
-      <div className="form-section">
-        <h2>Add a Task</h2>
-
-        {errorMsg && <div className="error-msg" onClick={dismissMessages}>{errorMsg}</div>}
-        {successMsg && <div className="success-msg" onClick={dismissMessages}>{successMsg}</div>}
-
-        <input
-          type="text"
-          placeholder="Title"
-          value={form.title}
-          onChange={e => setForm({ ...form, title: e.target.value })}
-          className="input"
-        />
-        <textarea
-          placeholder="Description"
-          value={form.description}
-          onChange={e => setForm({ ...form, description: e.target.value })}
-          className="textarea"
-        />
-        <button
-          onClick={handleAdd}
-          disabled={!form.title.trim()}
-          className="btn"
-        >
-          Add Task
-        </button>
-      </div>
-
-      <div className="task-section">
-        <h2>Task List</h2>
-        {tasks.length === 0 ? (
-          <p className="no-tasks">No tasks available.</p>
-        ) : (
-          tasks.map(task => (
-            <div key={task.id} className="task-card">
-              <h4>{task.title}</h4>
-              <p>{task.description}</p>
-              <button className="btn done-btn" onClick={() => markDone(task.id)}>
-                Mark as Done
-              </button>
-            </div>
-          ))
-        )}
-      </div>
+      <AddTaskForm
+        form={form}
+        setForm={setForm}
+        onAdd={handleAdd}
+        errorMsg={errorMsg}
+        successMsg={successMsg}
+        dismissMessages={dismissMessages}
+      />
+      <TaskList tasks={tasks} markDone={markDone} />
     </div>
   );
 }

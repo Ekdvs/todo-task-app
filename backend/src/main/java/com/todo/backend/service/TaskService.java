@@ -8,5 +8,6 @@ public interface TaskService {
     Task saveTask(Task task);
     List<Task> getRecentTasks();
     void markAsDone(Long id);
+    List<Task> getIncompleteTasks();
 }
 
