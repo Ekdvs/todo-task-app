@@ -16,7 +16,6 @@ function App() {
       setTasks(res.data);
     } catch (error) {
       setErrorMsg("Failed to fetch tasks. Please try again.");
-      console.error("Error fetching tasks:", error);
     }
   };
 
@@ -38,7 +37,6 @@ function App() {
       setErrorMsg('');
     } catch (error) {
       setErrorMsg("Error adding task. Please try again.");
-      console.error("Error adding task:", error);
     }
   };
 
@@ -48,7 +46,6 @@ function App() {
       fetchTasks();
     } catch (error) {
       setErrorMsg("Failed to mark task as done.");
-      console.error("Error marking task as done:", error);
     }
   };
 
@@ -58,45 +55,45 @@ function App() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.formSection}>
+    <div className="container">
+      <div className="form-section">
         <h2>Add a Task</h2>
 
-        {errorMsg && <div style={styles.errorMsg} onClick={dismissMessages}>{errorMsg}</div>}
-        {successMsg && <div style={styles.successMsg} onClick={dismissMessages}>{successMsg}</div>}
+        {errorMsg && <div className="error-msg" onClick={dismissMessages}>{errorMsg}</div>}
+        {successMsg && <div className="success-msg" onClick={dismissMessages}>{successMsg}</div>}
 
         <input
           type="text"
           placeholder="Title"
           value={form.title}
           onChange={e => setForm({ ...form, title: e.target.value })}
-          style={styles.input}
+          className="input"
         />
         <textarea
           placeholder="Description"
           value={form.description}
           onChange={e => setForm({ ...form, description: e.target.value })}
-          style={styles.textarea}
+          className="textarea"
         />
         <button
           onClick={handleAdd}
           disabled={!form.title.trim()}
-          style={{ ...styles.button, backgroundColor: form.title.trim() ? '#007bff' : '#aaa' }}
+          className="btn"
         >
-          Add
+          Add Task
         </button>
       </div>
 
-      <div style={styles.taskList}>
+      <div className="task-section">
         <h2>Task List</h2>
         {tasks.length === 0 ? (
-          <p style={{ color: '#777' }}>No tasks available.</p>
+          <p className="no-tasks">No tasks available.</p>
         ) : (
           tasks.map(task => (
-            <div key={task.id} style={styles.taskCard}>
+            <div key={task.id} className="task-card">
               <h4>{task.title}</h4>
               <p>{task.description}</p>
-              <button onClick={() => markDone(task.id)} style={styles.doneBtn}>
+              <button className="btn done-btn" onClick={() => markDone(task.id)}>
                 Mark as Done
               </button>
             </div>
@@ -106,77 +103,5 @@ function App() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: 'flex',
-    padding: '40px',
-    fontFamily: 'Segoe UI, sans-serif',
-    backgroundColor: '#f9f9f9',
-    minHeight: '100vh'
-  },
-  formSection: {
-    flex: 1,
-    paddingRight: '40px'
-  },
-  taskList: {
-    flex: 1,
-    paddingLeft: '40px',
-    borderLeft: '2px solid #ddd'
-  },
-  input: {
-    width: '100%',
-    padding: '10px',
-    marginBottom: '10px',
-    fontSize: '16px'
-  },
-  textarea: {
-    width: '100%',
-    padding: '10px',
-    marginBottom: '10px',
-    height: '80px',
-    fontSize: '16px'
-  },
-  button: {
-    padding: '10px 20px',
-    color: '#fff',
-    border: 'none',
-    cursor: 'pointer',
-    fontSize: '16px',
-    borderRadius: '4px'
-  },
-  taskCard: {
-    background: '#ffffff',
-    borderRadius: '8px',
-    padding: '15px',
-    marginBottom: '15px',
-    boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
-  },
-  doneBtn: {
-    padding: '8px 16px',
-    backgroundColor: '#28a745',
-    color: '#fff',
-    border: 'none',
-    fontSize: '14px',
-    cursor: 'pointer',
-    borderRadius: '4px'
-  },
-  errorMsg: {
-    backgroundColor: '#ffdddd',
-    color: '#d8000c',
-    padding: '10px',
-    borderRadius: '5px',
-    marginBottom: '10px',
-    cursor: 'pointer'
-  },
-  successMsg: {
-    backgroundColor: '#d4edda',
-    color: '#155724',
-    padding: '10px',
-    borderRadius: '5px',
-    marginBottom: '10px',
-    cursor: 'pointer'
-  }
-};
 
 export default App;
